@@ -14,7 +14,10 @@ const config = require('./config/config')
 //     console.log("Database connected successfully.")
 //   })
 
+const indexRouter = require('./routes/index')
+
 const app = express()
+app.use('/', indexRouter)
 
 app.use(morgan(config.morganLevel))
 app.use(bodyParser.urlencoded({ extended: false }))
