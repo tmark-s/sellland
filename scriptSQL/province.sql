@@ -13,12 +13,12 @@ INSERT INTO geography VALUES (6, 'ภาคใต้','Southern');
 
 
 CREATE TABLE province (
-  id SERIAL PRIMARY,
+  id SERIAL PRIMARY KEY,
   code varchar(2) NOT NULL,
   name_TH varchar(200) NOT NULL,
   name_EN varchar(200) NOT NULL,
   geoId INTEGER NOT NULL default '0',
-  FOREIGN KEY  (geoId) REFERENCES (geography)
+  FOREIGN KEY  (geoId) REFERENCES geography (id)
 );
 
 INSERT INTO province VALUES

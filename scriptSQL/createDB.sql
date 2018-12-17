@@ -31,30 +31,6 @@ VALUES ('สนามเป้า - รัชโยธิน','Sanampao - Ratcha
 INSERT INTO zone(name_TH,name_EN,created_date,created_by,updated_date,updated_by) 
 VALUES ('อนุสาวรีย์ - ราชเทวี - สยาม - ปทุมวัน','Victory Monument - Ratchathewi - Siam - Patthumwan',now(),'INIT',now(),'INIT')
 
-CREATE TABLE sellLand(
-    id  SERIAL PRIMARY KEY,
-    sellerId INTEGER,
-    landId INTEGER,
-    created_date timestamp,
-    created_by varchar(100) NOT NULL,
-    updated_date timestamp,
-    updated_by varchar(100) NOT NULL
-    FOREIGN KEY (sellerId) REFERENCES seller (id),
-    FOREIGN KEY (landId) REFERENCES land (id)
-)
-
-CREATE TABLE landZone(
-    id  SERIAL PRIMARY KEY,
-    zoneId INTEGER,
-    landId INTEGER,
-    created_date timestamp,
-    created_by varchar(100) NOT NULL,
-    updated_date timestamp,
-    updated_by varchar(100) NOT NULL
-    FOREIGN KEY (zoneId) REFERENCES zone (id),
-    FOREIGN KEY (landId) REFERENCES land (id)
-)
-
 CREATE TABLE land(
     id  SERIAL PRIMARY KEY,
     border polygon,
@@ -63,17 +39,30 @@ CREATE TABLE land(
     wa INTEGER,
     price_per_wa money,
     road varchar(200),
-    provinceId INTEGER,
-    districtId INTEGER,
-    sub_districtId INTEGER,
+    province_id INTEGER,
+    district_id INTEGER,
+    sub_district_id INTEGER,
     created_date timestamp,
-    landSlide varchar(200),
-    landCertificate varchar(200),
-    mapOfLand varchar(200),
+    land_slide varchar(200),
+    land_certificate varchar(200),
+    map_of_land varchar(200),
     created_by varchar(100) NOT NULL,
     updated_date timestamp,
     updated_by varchar(100) NOT NULL,
-    FOREIGN KEY (provinceId) REFERENCES province (id),
-    FOREIGN KEY (districtId) REFERENCES district (id),
-    FOREIGN KEY (sub_districtId) REFERENCES sub_district (id)
+    zone_id INTEGER,
+    FOREIGN KEY (province_id) REFERENCES province (id),
+    FOREIGN KEY (district_id) REFERENCES district (id),
+    FOREIGN KEY (sub_district_id) REFERENCES subdistrict (id)
+)
+
+CREATE TABLE sellLand(
+    id  SERIAL PRIMARY KEY,
+    seller_id INTEGER,
+    land_id INTEGER,
+    created_date timestamp,
+    created_by varchar(100) NOT NULL,
+    updated_date timestamp,
+    updated_by varchar(100) NOT NULL,
+    FOREIGN KEY (seller_id) REFERENCES seller (id),
+    FOREIGN KEY (land_id) REFERENCES land (id)
 )
