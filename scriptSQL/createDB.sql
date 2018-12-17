@@ -1,4 +1,3 @@
-CREATE DATABASE ssr_selland ;
 CREATE TABLE seller (
     id   SERIAL PRIMARY KEY,
     firstname varchar(100),
@@ -10,9 +9,11 @@ CREATE TABLE seller (
     updated_date timestamp,
     updated_by varchar(100) NOT NULL
 );
-INSERT INTO seller(firstname, lastname, mobileno, email) VALUES ('สมชาย', 'ทองดี', '0811111111', 'test1@email.com');
-INSERT INTO seller(firstname, lastname, mobileno, email) VALUES ('กาหลง', 'ต้นกาฝาก', '0822222222', 'test2@email.com');
-INSERT INTO seller(firstname, lastname, mobileno, email) VALUES ('สุภาวดี', 'สินทรัพย์', '0833333333', 'test3@email.com');
+
+INSERT INTO seller (firstname,lastname,mobileNo,email,created_date,created_by,updated_date,updated_by) VALUES 
+('สมชาย', 'ทองดี', '0811111111', 'test1@email.com',now(),'INIT',now(),'INIT'),
+('กาหลง', 'ต้นกาฝาก', '0822222222', 'test2@email.com',now(),'INIT',now(),'INIT'),
+('สุภาวดี', 'สินทรัพย์', '0833333333', 'test3@email.com',now(),'INIT',now(),'INIT');
 
 CREATE TABLE zone (
     id SERIAL PRIMARY KEY,
@@ -26,10 +27,9 @@ CREATE TABLE zone (
     updated_by varchar(100) NOT NULL
 )
 
-INSERT INTO zone(name_TH,name_EN,created_date,created_by,updated_date,updated_by) 
-VALUES ('สนามเป้า - รัชโยธิน','Sanampao - Ratchayothin',now(),'INIT',now(),'INIT')
-INSERT INTO zone(name_TH,name_EN,created_date,created_by,updated_date,updated_by) 
-VALUES ('อนุสาวรีย์ - ราชเทวี - สยาม - ปทุมวัน','Victory Monument - Ratchathewi - Siam - Patthumwan',now(),'INIT',now(),'INIT')
+INSERT INTO zone(name_TH,name_EN,created_date,created_by,updated_date,updated_by) VALUES 
+('สนามเป้า - รัชโยธิน','Sanampao - Ratchayothin',now(),'INIT',now(),'INIT'),
+('อนุสาวรีย์ - ราชเทวี - สยาม - ปทุมวัน','Victory Monument - Ratchathewi - Siam - Patthumwan',now(),'INIT',now(),'INIT');
 
 CREATE TABLE land(
     id  SERIAL PRIMARY KEY,
