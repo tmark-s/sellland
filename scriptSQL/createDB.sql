@@ -57,7 +57,6 @@ CREATE TABLE landZone(
 
 CREATE TABLE land(
     id  SERIAL PRIMARY KEY,
-    center point,
     border polygon,
     rai INTEGER,
     ngan INTEGER,
