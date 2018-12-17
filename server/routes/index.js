@@ -1,17 +1,14 @@
 const express = require('express')
 const router = express.Router()
 
-router.get('/', async function (req, res, next) {
-    res.render('formSell', {
+const backoffice = require('./backoffice')
+
+router.get('/backoffice/login', async function (req, res, next) {
+    res.render('loginPage', {
+        isLogin: false
     })
 })
+router.use('/backoffice', backoffice)
 
-router.get('/show', async function (res, res, next) {
-    res.render('showLand', {})
-})
-
-router.get('/showpoly', async function (res, res, next) {
-    res.render('showPoly', {})
-})
 
 module.exports = router;
