@@ -4,15 +4,13 @@ const bodyParser = require('body-parser')
 const exphbs = require('express-handlebars')
 const handlebars = require('handlebars')
 
-const Mongoose = require('./db')
-const config = require('./config/config')
 
-Mongoose.getSingleton()
-  .then(() => {
-    console.log("Database connected successfully.")
-  })
+const config = require('./config/config')
+const routes = require('./routes')
 
 const app = express()
+
+app.use(routes)
 
 app.use(morgan(config.morganLevel))
 app.use(bodyParser.urlencoded({ extended: false }))

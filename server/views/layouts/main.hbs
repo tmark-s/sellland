@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.9/semantic.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.9/semantic.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/backoffice.css">
+
+    <title>Homepage</title>
+</head>
+
+<body>
+
+    <div class="row">
+        <div class="column">
+            <div id="application" class="ui segment">
+                <div class="ui two column middle aligned grid">
+                    <div class="left aligned column">
+                        <h1 class="ui header">
+                            <img class="ui image" src="../images/logo black.png">
+                            <div class="content">GDPR</div>
+                        </h1>
+                    </div>
+                    <div class="right aligned column">
+                        <div id="CallToAction">
+                            {{#if isLogin}}
+                                {{#ifCond role '===' 'admin'}}
+                                    <button class="ui primary icon button" id="btnAddAdmin" onclick="goToAdminPage()">
+                                        <i class="user icon"></i>
+                                        ADMIN MANAGEMENT
+                                    </button>
+                                {{/ifCond}}
+                                <button class="ui icon button" id="btnSignOut" onclick="logout()">
+                                    <i class="external alternate icon"></i>
+                                    SIGN OUT
+                                </button>
+                            {{/if}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{#if isLogin}}
+    <div class="row">
+        <div id="menu" class="ui basic segment">
+            <div id="navigation" class="ui grid">
+                {{#ifCond role '===' 'admin'}}
+                    <div class="ui three item secondary pointing menu">
+                        <a id="domainBtn" class="item" onclick="changePage('domain')">
+                            <h3>DOMAIN MANAGEMENT</h3>
+                        </a>
+                        <a id="userBtn" class="item" onclick="changePage('user')">
+                            <h3>USER MANAGEMENT</h3>
+                        </a>
+                        <a id="fileBtn" class="item" onclick="changePage('file')">
+                            <h3>FILE FILTER</h3>
+                        </a>
+                    </div>
+                {{/ifCond}}
+                {{#ifCond role '===' 'callcentre'}}
+                    <div class="ui one item secondary pointing menu">
+                        <a id="userBtn" class="item" onclick="changePage('user')">
+                            <h3>USER MANAGEMENT</h3>
+                        </a>
+                    </div>
+                {{/ifCond}}
+                {{#ifCond role '===' 'marketing'}}
+                    <div class="ui one item secondary pointing menu">
+                        <a id="fileBtn" class="item" onclick="changePage('file')">
+                            <h3>FILE FILTER</h3>
+                        </a>
+                    </div>
+                {{/ifCond}}
+            </div>
+        </div>
+    </div>
+    {{/if}}
+    <!--End Application Bar-->
+
+
+    <div class="ui negative message" id="notic" style="margin:0px" hidden>
+        <div class="content">
+            <div class="ui text container">
+                <div class="header">
+                    <i class="notched circle loading icon"></i>
+                    <label id="noticMessage"> Session timeout. Going to Login page....</label>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{{body}}}
+
+    
+
+</body>
+
+</html>
+
+<script>
+    function changePage(page) {
+        let urlPage = "";
+        switch (page) {
+            case "domain": urlPage = "/backoffice/domain"; break;
+            case "user": urlPage = "/backoffice/user"; break;
+            case "file": urlPage = "/backoffice/file-filter"; break;
+        }
+        $.ajax({
+            type: 'GET',
+            contentType: 'application/json',
+            success: function (data) {
+                window.location.href = urlPage;
+            }
+        });
+    }
+
+    function goToAdminPage() {
+        $.ajax({
+            type: 'GET',
+            contentType: 'application/json',
+            success: function (data) {
+                window.location.href = '/backoffice/admin';
+            }
+        })
+    }
+
+    function logout() {
+        $.ajax({
+            type: 'GET',
+            url: '/auth/logout',
+            contentType: 'application/json',
+            success: () => {
+                window.location.href = '/login';
+            }
+        });
+    }
+
+</script>
