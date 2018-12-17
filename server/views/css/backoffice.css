@@ -1,0 +1,65 @@
+#box1, #search {
+  margin: 20px;
+}
+
+#lastbox {
+  margin-bottom: 20px;
+}
+
+#application {
+  margin: 0px;
+}
+
+#menu {
+  padding-top: 0px;
+  background-color: rgb(248, 248, 248);
+}
+
+.ui.toggle.checkbox {
+  top: 6px;
+}
+
+.ui.checkbox {
+  top: 6px;
+}
+
+p {
+  text-align: center;
+}
+
+#btngrid {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+#homecontainer {
+  margin-top: 150px;
+}
+
+h1 {
+  font-size: 36px;
+}
+
+h2 {
+  font-size: 24px;
+}
+
+h3 {
+  font-size: 20px;
+}
+
+h4 {
+  font-size: 20px;
+}
+
+h5 {
+  font-size: 18px;
+}
+
+h6 {
+  font-size: 14px;
+}
+
+p {
+  font-size: 16px;
+}
