@@ -17,15 +17,15 @@ INSERT INTO seller (firstname,lastname,mobileNo,email,created_date,created_by,up
 
 CREATE TABLE zone (
     id SERIAL PRIMARY KEY,
-    name_TH varchar(250) NOT NULL,
-    name_EN varchar(250) NOT NULL,
+    name_th varchar(250) NOT NULL,
+    name_en varchar(250) NOT NULL,
     location point,
     border polygon,
     created_date timestamp,
     created_by varchar(100) NOT NULL,
     updated_date timestamp,
     updated_by varchar(100) NOT NULL
-)
+);
 
 INSERT INTO zone(name_TH,name_EN,created_date,created_by,updated_date,updated_by) VALUES 
 ('สนามเป้า - รัชโยธิน','Sanampao - Ratchayothin',now(),'INIT',now(),'INIT'),
@@ -52,8 +52,8 @@ CREATE TABLE land(
     zone_id INTEGER,
     FOREIGN KEY (province_id) REFERENCES province (id),
     FOREIGN KEY (district_id) REFERENCES district (id),
-    FOREIGN KEY (sub_district_id) REFERENCES subdistrict (id)
-)
+    FOREIGN KEY (sub_district_id) REFERENCES sub_district (id)
+);
 
 CREATE TABLE sellLand(
     id  SERIAL PRIMARY KEY,
@@ -65,4 +65,4 @@ CREATE TABLE sellLand(
     updated_by varchar(100) NOT NULL,
     FOREIGN KEY (seller_id) REFERENCES seller (id),
     FOREIGN KEY (land_id) REFERENCES land (id)
-)
+);
