@@ -6,26 +6,13 @@ const exphbs = require('express-handlebars')
 const handlebars = require('handlebars')
 const path = require('path')
 
-<<<<<<< HEAD
 
 const config = require('./config/config')
-const routes = require('./routes')
-=======
-// const Mongoose = require('./db')
-const config = require('./config/config')
-
-// Mongoose.getSingleton()
-//   .then(() => {
-//     console.log("Database connected successfully.")
-//   })
-
-const indexRouter = require('./routes/index')
->>>>>>> eeb358961babcf37acc2a50a7e173951866730b3
+const routes = require('./routes/index')
 
 const app = express()
-app.use('/', indexRouter)
 
-app.use(routes)
+app.use('/', routes)
 
 app.use(morgan(config.morganLevel))
 app.use(bodyParser.urlencoded({ extended: false }))

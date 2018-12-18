@@ -10,11 +10,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.9/semantic.min.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.9/semantic.min.js"></script>
-<<<<<<< HEAD
-    <link rel="stylesheet" type="text/css" href="../css/backoffice.css">
-=======
     <link rel="stylesheet" type="text/css" href="/css/backoffice.css">
->>>>>>> eeb358961babcf37acc2a50a7e173951866730b3
+
 
     <title>Homepage</title>
 </head>
@@ -27,36 +24,23 @@
                 <div class="ui two column middle aligned grid">
                     <div class="left aligned column">
                         <h1 class="ui header">
-<<<<<<< HEAD
                             <img class="ui image" src="../images/logo black.png">
                             <div class="content">GDPR</div>
-=======
-                            <img class="ui image" src="/images/logo black.png">
-                            <div class="content">SiriLeadApi</div>
->>>>>>> eeb358961babcf37acc2a50a7e173951866730b3
                         </h1>
                     </div>
                     <div class="right aligned column">
                         <div id="CallToAction">
-<<<<<<< HEAD
                             {{#if isLogin}}
-                                {{#ifCond role '===' 'admin'}}
-                                    <button class="ui primary icon button" id="btnAddAdmin" onclick="goToAdminPage()">
-                                        <i class="user icon"></i>
-                                        ADMIN MANAGEMENT
-                                    </button>
-                                {{/ifCond}}
-                                <button class="ui icon button" id="btnSignOut" onclick="logout()">
-                                    <i class="external alternate icon"></i>
-                                    SIGN OUT
-                                </button>
-=======
-                            {{#if isLogin }}
+                            {{#ifCond role '===' 'admin'}}
+                            <button class="ui primary icon button" id="btnAddAdmin" onclick="goToAdminPage()">
+                                <i class="user icon"></i>
+                                ADMIN MANAGEMENT
+                            </button>
+                            {{/ifCond}}
                             <button class="ui icon button" id="btnSignOut" onclick="logout()">
                                 <i class="external alternate icon"></i>
                                 SIGN OUT
                             </button>
->>>>>>> eeb358961babcf37acc2a50a7e173951866730b3
                             {{/if}}
                         </div>
                     </div>
@@ -69,75 +53,32 @@
     <div class="row">
         <div id="menu" class="ui basic segment">
             <div id="navigation" class="ui grid">
-<<<<<<< HEAD
-                {{#ifCond role '===' 'admin'}}
-                    <div class="ui three item secondary pointing menu">
-                        <a id="domainBtn" class="item" onclick="changePage('domain')">
-                            <h3>DOMAIN MANAGEMENT</h3>
-                        </a>
-                        <a id="userBtn" class="item" onclick="changePage('user')">
-                            <h3>USER MANAGEMENT</h3>
-                        </a>
-                        <a id="fileBtn" class="item" onclick="changePage('file')">
-                            <h3>FILE FILTER</h3>
-                        </a>
-                    </div>
-                {{/ifCond}}
-                {{#ifCond role '===' 'callcentre'}}
-                    <div class="ui one item secondary pointing menu">
-                        <a id="userBtn" class="item" onclick="changePage('user')">
-                            <h3>USER MANAGEMENT</h3>
-                        </a>
-                    </div>
-                {{/ifCond}}
-                {{#ifCond role '===' 'marketing'}}
-                    <div class="ui one item secondary pointing menu">
-                        <a id="fileBtn" class="item" onclick="changePage('file')">
-                            <h3>FILE FILTER</h3>
-                        </a>
-                    </div>
-                {{/ifCond}}
-=======
-                <div class="ui four item secondary pointing menu">
-                    <a id="activityBtn" class="item" onclick="changePage('land')">
-                        <h3>LAND</h3>
+                {{#ifCond role '===' 'admin'}} <div class="ui three item secondary pointing menu">
+                    <a id="offeredLandBtn" class="item" onclick="changePage('offeredLand')">
+                        <h3>Offered Land</h3>
                     </a>
                 </div>
->>>>>>> eeb358961babcf37acc2a50a7e173951866730b3
+                {{/ifCond}}
+                {{#ifCond role '===' 'callcentre'}}
+                <div class="ui one item secondary pointing menu">
+                    <a id="offeredLandBtn" class="item" onclick="changePage('offeredLand')">
+                        <h3>Offered Land</h3>
+                    </a>
+                </div>
+                {{/ifCond}}
+                {{#ifCond role '===' 'marketing'}}
+                <div class="ui one item secondary pointing menu">
+                    <a id="offeredLandBtn" class="item" onclick="changePage('offeredLand')">
+                        <h3>Offered Land</h3>
+                    </a>
+                </div>
+                {{/ifCond}}
             </div>
         </div>
     </div>
     {{/if}}
     <!--End Application Bar-->
-
-
-<<<<<<< HEAD
-    <div class="ui negative message" id="notic" style="margin:0px" hidden>
-=======
-    {{!-- <div class="ui negative message" id="notic" style="margin:0px" hidden>
->>>>>>> eeb358961babcf37acc2a50a7e173951866730b3
-        <div class="content">
-            <div class="ui text container">
-                <div class="header">
-                    <i class="notched circle loading icon"></i>
-                    <label id="noticMessage"> Session timeout. Going to Login page....</label>
-                </div>
-            </div>
-        </div>
-<<<<<<< HEAD
-    </div>
     {{{body}}}
-
-    
-=======
-    </div> --}}
-    <div style="margin-bottom: 10%">
-        {{{body}}}
-    </div>
-
-
-
->>>>>>> eeb358961babcf37acc2a50a7e173951866730b3
 
 </body>
 
@@ -147,13 +88,7 @@
     function changePage(page) {
         let urlPage = "";
         switch (page) {
-<<<<<<< HEAD
-            case "domain": urlPage = "/backoffice/domain"; break;
-            case "user": urlPage = "/backoffice/user"; break;
-            case "file": urlPage = "/backoffice/file-filter"; break;
-=======
             case "land": urlPage = "/backoffice/land"; break;
->>>>>>> eeb358961babcf37acc2a50a7e173951866730b3
         }
         $.ajax({
             type: 'GET',
@@ -164,35 +99,14 @@
         });
     }
 
-<<<<<<< HEAD
-    function goToAdminPage() {
-        $.ajax({
-            type: 'GET',
-            contentType: 'application/json',
-            success: function (data) {
-                window.location.href = '/backoffice/admin';
-            }
-        })
-    }
-
-=======
->>>>>>> eeb358961babcf37acc2a50a7e173951866730b3
     function logout() {
         $.ajax({
             type: 'GET',
             url: '/auth/logout',
             contentType: 'application/json',
             success: () => {
-<<<<<<< HEAD
-                window.location.href = '/login';
-            }
-        });
-    }
-
-=======
                 window.location.href = '/backoffice/login';
             }
         });
     }
->>>>>>> eeb358961babcf37acc2a50a7e173951866730b3
 </script>

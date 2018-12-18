@@ -1,21 +1,24 @@
 const express = require('express')
 const router = express.Router()
 
-const backoffice = require('./backoffice')
+const backoffice = require('./backoffice/index')
+const backofficeAPI = require('./api')
 
-<<<<<<< HEAD
-router.use('/backoffice', backoffice)
+router.get('/', async function (req, res, next) {
+    res.render('loginPage', {
+        isLogin: false
+    })
+});
 
-module.exports = router
-
-=======
 router.get('/backoffice/login', async function (req, res, next) {
     res.render('loginPage', {
         isLogin: false
     })
-})
-router.use('/backoffice', backoffice)
+});
+
+router.use('/backoffice', backoffice);
+router.use('/api', backofficeAPI)
+
 
 
 module.exports = router;
->>>>>>> eeb358961babcf37acc2a50a7e173951866730b3
