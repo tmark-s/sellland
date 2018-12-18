@@ -31,6 +31,7 @@
         });
         drawingManager.setMap(map);
 
+
         google.maps.event.addListener(drawingManager, 'overlaycomplete', function (event) {
             if (event.type == 'polygon') {
                 var test = event.overlay.getPath()
@@ -39,11 +40,14 @@
                     var lat = event.overlay.getPath().getAt(i).lat();
                     var lng = event.overlay.getPath().getAt(i).lng();
                     //polygonArray.push(new google.maps.LatLng(lat, lng));
-                    polygonArray.push({ lat: lat, lng: lng });
+                    //polygonArray.push({ lat: lat, lng: lng });
+                    polygonArray.push('(' + lat + "," + lng + ')');
                     testBound.extend(new google.maps.LatLng(lat, lng));
                 }
+                const str = polygonArray.toString();
                 console.log(testBound.getCenter().toUrlValue(6))
                 console.log(polygonArray)
+                console.log(str)
             }
         });
     }
