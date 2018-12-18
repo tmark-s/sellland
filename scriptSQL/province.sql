@@ -1,4 +1,4 @@
-CREATE TABLE geography(
+CREATE TABLE direction(
 	 id  SERIAL PRIMARY KEY,
 	 name_TH varchar(200) NOT NULL,
    name_EN varchar(200) NOT NULL,   
@@ -8,7 +8,7 @@ CREATE TABLE geography(
    updated_by varchar(100)
 );
 
-INSERT INTO geography VALUES 
+INSERT INTO direction VALUES 
 (1, 'ภาคเหนือ', 'North',now(),'INIT',now(),'INIT'),
 (2, 'ภาคกลาง', 'Central',now(),'INIT',now(),'INIT'),
 (3, 'ภาคตะวันออกเฉียงเหนือ','North East',now(),'INIT',now(),'INIT'),
@@ -22,12 +22,12 @@ CREATE TABLE province (
   code varchar(2) NOT NULL,
   name_TH varchar(200) NOT NULL,
   name_EN varchar(200) NOT NULL,
-  geoId INTEGER NOT NULL default '0',   
+  direction_id INTEGER NOT NULL default '0',   
   created_date timestamp,
   created_by varchar(100),
   updated_date timestamp,
   updated_by varchar(100),
-  FOREIGN KEY  (geoId) REFERENCES geography(id)
+  FOREIGN KEY  (direction_id) REFERENCES direction(id)
 );
 
 INSERT INTO province VALUES

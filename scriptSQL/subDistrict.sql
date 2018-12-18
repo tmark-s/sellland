@@ -1,20 +1,20 @@
-CREATE TABLE subDistrict (
+CREATE TABLE sub_district (
     id  SERIAL PRIMARY KEY,
     code varchar(6)  NOT NULL,
     name_TH varchar(150)  NOT NULL,
-    districtId integer NOT NULL default '0',
-    provinceId integer NOT NULL default '0',
-    geoId integer NOT NULL default '0',
+    district_id integer NOT NULL default '0',
+    province_id integer NOT NULL default '0',
+    direction_id integer NOT NULL default '0',
     created_date timestamp,
     created_by varchar(100),
     updated_date timestamp,
     updated_by varchar(100),
-    FOREIGN KEY (provinceId) REFERENCES province(id),
-    FOREIGN KEY (districtId) REFERENCES district(id),
-    FOREIGN KEY (geoId) REFERENCES geography(id)
+    FOREIGN KEY (province_id) REFERENCES province(id),
+    FOREIGN KEY (district_id) REFERENCES district(id),
+    FOREIGN KEY (direction_id) REFERENCES direction(id)
 );
 
-INSERT INTO subDistrict VALUES 
+INSERT INTO sub_district VALUES 
 (1, '100101', 'พระบรมมหาราชวัง', 1, 1, 2,now(),'INIT',now(),'INIT'),
 (2, '100102', 'วังบูรพาภิรมย์', 1, 1, 2,now(),'INIT',now(),'INIT'),
 (3, '100103', 'วัดราชบพิธ', 1, 1, 2,now(),'INIT',now(),'INIT'),

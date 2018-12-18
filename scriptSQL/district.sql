@@ -3,14 +3,14 @@ CREATE TABLE district (
     code varchar(4) NOT NULL,
     name_TH varchar(200) NOT NULL,
     name_EN varchar(200) NOT NULL,
-    geoId integer NOT NULL default '0',
-    provinceId integer NOT NULL default '0',
+    direction_id integer NOT NULL default '0',
+    province_id integer NOT NULL default '0',
     created_date timestamp,
     created_by varchar(100),
     updated_date timestamp,
     updated_by varchar(100),
-    FOREIGN KEY  (provinceId) REFERENCES province(id),
-    FOREIGN KEY  (geoId) REFERENCES geography(id)
+    FOREIGN KEY  (province_id) REFERENCES province(id),
+    FOREIGN KEY  (direction_id) REFERENCES direction(id)
 );
 
 INSERT INTO district VALUES
