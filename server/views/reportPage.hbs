@@ -1,0 +1,87 @@
+<div class="ui container">
+    <div class="ui text container">
+        <br>
+        <h2 class="ui  center aligned  icon header">Offered Land</h2>
+    </div>
+    <br>
+    <div class="ui form">
+        <div class="inline field">
+            <label>Zone</label>
+            <div class="field"></div>
+            <div class="ui fluid search selection dropdown" id="ddModalEvent">
+                <input type="hidden" id="modalEvent" onchange="filterZone()">
+                <i class="dropdown icon"></i>
+                <div class="default text">All Zone</div>
+                <div class="menu">
+                    <div class="item">All Zone</div>
+                    {{#each zoneList}}
+                    <div class="item" data-value="{{this.id}}"><b>Zone {{this.id}}</b> &nbsp;&nbsp; {{this.name_th}}</div>
+                    {{/each}}
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="ui right floated button primary" style="margin-bottom: 1%" onclick="exportCSV()">
+        MAP
+    </div>
+    <div class="ui right floated button primary" style="margin-bottom: 1%" onclick="exportCSV()">
+        EXPORT CSV
+    </div>
+    <table class="ui five column table">
+        <thead>
+            <tr>
+                <th>Seller</th>
+                <th>Zone</th>
+                <th>Created Date</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>John</td>
+                <td>Approved</td>
+                <td>22</td>
+                <td>Male</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td>Jamie</td>
+                <td>Approved</td>
+                <td>32</td>
+                <td>Male</td>
+                <td>Requires call</td>
+            </tr>
+            <tr>
+                <td>Jill</td>
+                <td>Denied</td>
+                <td>22</td>
+                <td>Female</td>
+                <td>None</td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>3 People</th>
+                <th>2 Approved</th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+        </tfoot>
+    </table>
+
+</div>
+
+<script>
+    $('.ui.accordion')
+        .accordion()
+        ;
+    $('.ui.dropdown').dropdown();
+</script>
+
+<script>
+    function filterZone() {
+    }
+</script>
