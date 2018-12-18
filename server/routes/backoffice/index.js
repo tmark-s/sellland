@@ -1,18 +1,33 @@
 const express = require('express')
 const router = express.Router()
 
-const api = require('./api')
+const ZoneController = require('../../controller/ZoneController')
 
-router.use('/api', api)
 
 router.get('/', async function (req, res, next) {
-    res.render('landPage', {
+    res.render('loginPage', {
         isLogin: true
     })
 })
 
-router.get('/land', async function (req, res, next) {
-    res.render('landPage', {
+router.get('/land-report', async function (req, res, next) {
+    const zones = await ZoneController.list();
+    res.render('reportPage', {
+        isLogin: true,
+        zoneList: zones
+    })
+})
+
+router.get('/land-map', async function (req, res, next) {
+    const zones = await ZoneController.list();
+    res.render('mapPage', {
+        isLogin: true,
+        zoneList: zones
+    })
+})
+
+router.get('/create', async function (res, res, next) {
+    res.render('formSell', {
         isLogin: true
     })
 })
