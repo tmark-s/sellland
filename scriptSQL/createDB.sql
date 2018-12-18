@@ -33,6 +33,7 @@ INSERT INTO zone(name_TH,name_EN,created_date,created_by,updated_date,updated_by
 
 CREATE TABLE land(
     id  SERIAL PRIMARY KEY,
+	location point,
     border polygon,
     rai INTEGER,
     ngan INTEGER,
