@@ -20,7 +20,7 @@ class SelllandController {
     landSlide,
     landCertificate,
     mapOfLand,
-    zoneId
+    location
   ) {
     try {
       const sellland = {}
@@ -42,6 +42,8 @@ class SelllandController {
       sellland.landSlide = landSlide
       sellland.landCertificate = landCertificate
       sellland.mapOfLand = mapOfLand
+      sellland.location = location
+      
       sellland.zoneId = zoneId
 
       const newSellland = await Sellland.create(sellland)
