@@ -34,8 +34,8 @@ INSERT INTO zone(id,name_TH,name_EN,location,border,created_date,created_by,upda
 
 CREATE TABLE land(
     id  SERIAL PRIMARY KEY,
-	location point,
-    border polygon,
+	location geometry,
+    border geometry,
     rai INTEGER,
     ngan INTEGER,
     wa INTEGER,
