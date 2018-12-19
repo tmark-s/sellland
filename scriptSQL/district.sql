@@ -5,9 +5,9 @@ CREATE TABLE district (
     name_EN varchar(200) NOT NULL,
     direction_id integer NOT NULL default '0',
     province_id integer NOT NULL default '0',
-    created_date timestamp,
+    created_date timestamp default now(),
     created_by varchar(100),
-    updated_date timestamp,
+    updated_date timestamp default now(),
     updated_by varchar(100),
     FOREIGN KEY  (province_id) REFERENCES province(id),
     FOREIGN KEY  (direction_id) REFERENCES direction(id)

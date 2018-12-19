@@ -4,9 +4,9 @@ CREATE TABLE seller (
     lastname varchar(100),
     mobileNo varchar(10),
     email varchar(100),
-    created_date timestamp,
+    created_date timestamp default now(),
     created_by varchar(100) NOT NULL,
-    updated_date timestamp,
+    updated_date timestamp default now(),
     updated_by varchar(100) NOT NULL
 );
 
@@ -21,9 +21,9 @@ CREATE TABLE zone (
     name_en varchar(250) NOT NULL,
     location geometry,
     border geometry,
-    created_date timestamp,
+    created_date timestamp default now(),
     created_by varchar(100) NOT NULL,
-    updated_date timestamp,
+    updated_date timestamp default now(),
     updated_by varchar(100) NOT NULL
 );
 
@@ -39,17 +39,17 @@ CREATE TABLE land(
     rai INTEGER,
     ngan INTEGER,
     wa INTEGER,
-    price_per_wa money,
+    price_per_wa NUMERIC,
     road varchar(200),
     province_id INTEGER,
     district_id INTEGER,
     sub_district_id INTEGER,
-    created_date timestamp,
+    created_date timestamp default now(),
     land_slide varchar(200),
     land_certificate varchar(200),
     map_of_land varchar(200),
     created_by varchar(100) NOT NULL,
-    updated_date timestamp,
+    updated_date timestamp default now(),
     updated_by varchar(100) NOT NULL,
     zone_id INTEGER,
     FOREIGN KEY (province_id) REFERENCES province (id),
@@ -61,9 +61,9 @@ CREATE TABLE sellLand(
     id  SERIAL PRIMARY KEY,
     seller_id INTEGER,
     land_id INTEGER,
-    created_date timestamp,
+    created_date timestamp default now(),
     created_by varchar(100) NOT NULL,
-    updated_date timestamp,
+    updated_date timestamp default now(),
     updated_by varchar(100) NOT NULL,
     FOREIGN KEY (seller_id) REFERENCES seller (id),
     FOREIGN KEY (land_id) REFERENCES land (id)
