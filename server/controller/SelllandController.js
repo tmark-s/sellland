@@ -1,6 +1,5 @@
-const Land = require('../model/Land')
-const Seller = require('../model/Seller')
 const Sellland = require('../model/Sellland')
+const Zone = require('../model/Zone')
 
 class SelllandController {
   static async create (
@@ -43,8 +42,13 @@ class SelllandController {
       sellland.landCertificate = landCertificate
       sellland.mapOfLand = mapOfLand
       sellland.location = location
-      
-      sellland.zoneId = zoneId
+
+      const zone = await Zone.findZone(location)
+      if (zone) {
+        sellland.zoneId = zone.id
+      } else {
+        sellland.zoneId = undefined
+      }
 
       const newSellland = await Sellland.create(sellland)
 

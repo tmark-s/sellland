@@ -2,7 +2,7 @@ const db = require('../db')
 
 class Sellland {
   static async create (sellland) {
-    const { seller } = await db.query(
+    const seller = await db.query(
       `SELECT * FROM seller WHERE firstname = $1 AND lastname = $2`,
       [
         sellland.firstname,
@@ -10,7 +10,7 @@ class Sellland {
       ]
     )
 
-    if (!seller[0]) {
+    if (!seller.rows[0]) {
       try {
         await db.query('BEGIN')
           
@@ -54,8 +54,8 @@ class Sellland {
         const { newSellland } = await db.query(
           `INSERT INTO sellland (seller_id, land_id, created_by, updated_by) VALUES ($1, $2, $3, $4) RETURNING *`,
           [
-            newSeller[0].id,
-            newLand[0].id,
+            newSeller.rows[0].id,
+            newLand.rows[0].id,
             sellland.createdBy,
             sellland.updatedBy
           ]
@@ -63,7 +63,7 @@ class Sellland {
 
         await db.query('COMMIT')
 
-        return newSellland[0]
+        return newSellland.rows[0]
       } catch (err) {
         await db.query('ROLLBACK')
 
@@ -75,8 +75,8 @@ class Sellland {
 
         const { newLand } = await db.query(
           `INSERT INTO land (border, rai, ngan, wa, price_per_wa, road, province_id, district_id, sub_district_id,
-          land_slide, land_certificate, map_of_land, created_by, zone_id, updated_by) VALUES ($1, $2, $3, $4, $5, $6, $7, $8,
-          $9, $10, $11, $12, $13, $14) RETURNING *`,
+          land_slide, land_certificate, map_of_land, created_by, zone_id, updated_by, location) VALUES ($1, $2, $3, $4, $5, $6, $7, $8,
+          $9, $10, $11, $12, $13, $14, $15, $16) RETURNING *`,
           [
             sellland.border,
             sellland.rai,
@@ -92,15 +92,16 @@ class Sellland {
             sellland.mapOfLand,
             sellland.createdBy,
             sellland.zoneId,
-            sellland.updatedBy
+            sellland.updatedBy,
+            sellland.location
           ]
         )
 
         const { newSellland } = await db.query(
           `INSERT INTO sellland (seller_id, land_id, created_by, updated_by) VALUES ($1, $2, $3, $4) RETURNING *`,
           [
-            seller[0].id,
-            newLand[0].id,
+            seller.rows[0].id,
+            newLand.rows[0].id,
             sellland.createdBy,
             sellland.updatedBy
           ]
@@ -108,8 +109,9 @@ class Sellland {
 
         await db.query('COMMIT')
 
-        return newSellland[0]
+        return newSellland.rows[0]
       } catch (err) {
+        console.log(err)
         await db.query('ROLLBACK')
 
         return undefined

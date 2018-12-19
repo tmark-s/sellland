@@ -22,7 +22,7 @@ router.post('/create-sellland', async function (req, res) {
       req.body.landSlide,
       req.body.landCertificate,
       req.body.mapOfLand,
-      req.body.zoneId
+      req.body.location
     )
 
     if (newSellland) {
