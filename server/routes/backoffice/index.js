@@ -12,17 +12,30 @@ router.get('/', async function (req, res, next) {
 
 router.get('/land-report', async function (req, res, next) {
     const zones = await ZoneController.list();
+
     res.render('reportPage', {
         isLogin: true,
-        zoneList: zones
+        zoneList: zones,
+        poly: zones.st_asgeojson
     })
 })
 
 router.get('/land-map', async function (req, res, next) {
-    const zones = await ZoneController.list();
+    const polygons = await ZoneController.getPolygon();
+    const zoneList = await ZoneController.getList();
     res.render('mapPage', {
         isLogin: true,
-        zoneList: zones
+        zoneList: zoneList
+    })
+})
+
+router.get('/land-map', async function (req, res, next) {
+    const polygons = await ZoneController.getPolygon(req.params.zoneId);
+    const zoneList = await ZoneController.getList();
+    res.render('mapPage', {
+        isLogin: true,
+        zoneList: zoneList,
+        polygons: polygons
     })
 })
 
