@@ -28,7 +28,7 @@ router.get('/map', async function (req, res, next) {
     })
 })
 
-router.get('/land-map', async function (req, res, next) {
+router.get('/map/:zoneId', async function (req, res, next) {
     const polygons = await ZoneController.getPolygon(req.params.zoneId);
     const zoneList = await ZoneController.getList();
     res.render('mapPage', {
