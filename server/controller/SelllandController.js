@@ -1,6 +1,5 @@
-const Land = require('../model/Land')
-const Seller = require('../model/Seller')
 const Sellland = require('../model/Sellland')
+const Zone = require('../model/Zone')
 
 class SelllandController {
   static async create (
@@ -20,45 +19,48 @@ class SelllandController {
     landSlide,
     landCertificate,
     mapOfLand,
-    createdBy,
-    zoneId
+    location
   ) {
     try {
-      const seller = await Seller.findByName(firstname, lastname)
-      if (!seller) {
-        const sellerObj = {}
-        sellerObj.firstname = firstname
-        sellerObj.lastname = lastname
-        sellerObj.mobileno = mobileno
-        sellerObj.email = email
-        seller.createBy = `${firstname} ${lastname}`
+      const sellland = {}
+      sellland.firstname = firstname
+      sellland.lastname = lastname
+      sellland.mobileno = mobileno
+      sellland.email = email
+      sellland.createdBy = `${firstname} ${lastname}`
+      sellland.updatedBy = `${firstname} ${lastname}`
+      sellland.border = border
+      sellland.rai = rai
+      sellland.ngan = ngan
+      sellland.wa = wa
+      sellland.pricePerWa = pricePerWa
+      sellland.road = road
+      sellland.provinceId = provinceId
+      sellland.districtId = districtId
+      sellland.subDistrictId = subDistrictId
+      sellland.landSlide = landSlide
+      sellland.landCertificate = landCertificate
+      sellland.mapOfLand = mapOfLand
+      sellland.location = location
 
-        const newSeller = await Seller.create(sellerObj)
-        if (!newSeller) {
-          return undefined
-        }
+      const zone = await Zone.findZone(location)
+      if (zone) {
+        sellland.zoneId = zone.id
+      } else {
+        sellland.zoneId = undefined
       }
 
-      const landObj = {}
-      landObj.border = border
-      landObj.rai = rai
-      landObj.ngan = ngan
-      landObj.wa = wa
-      landObj.pricePerWa = pricePerWa
-      landObj.road = road
-      landObj.provinceId = provinceId
-      landObj.districtId = districtId
-      landObj.subDistrictId = subDistrictId
-      landObj.landSlide = landSlide
-      landObj.landCertificate = landCertificate
-      landObj.mapOfLand = mapOfLand
-      landObj.createdBy = `${firstname} ${lastname}`
-      landObj.zoneId = zoneId
-      const newLand = await Land.create(landObj)
-      
+      const newSellland = await Sellland.create(sellland)
 
+      if (newSellland) {
+        return newSellland
+      } else {
+        return undefined
+      }
     } catch (err) {
       return undefined
     }
   }
 }
+
+module.exports = SelllandController

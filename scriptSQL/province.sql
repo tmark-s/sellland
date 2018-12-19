@@ -2,9 +2,9 @@ CREATE TABLE direction(
 	 id  SERIAL PRIMARY KEY,
 	 name_TH varchar(200) NOT NULL,
    name_EN varchar(200) NOT NULL,   
-   created_date timestamp,
+   created_date timestamp default now(),
    created_by varchar(100),
-   updated_date timestamp,
+   updated_date timestamp default now(),
    updated_by varchar(100)
 );
 
@@ -23,9 +23,9 @@ CREATE TABLE province (
   name_TH varchar(200) NOT NULL,
   name_EN varchar(200) NOT NULL,
   direction_id INTEGER NOT NULL default '0',   
-  created_date timestamp,
+  created_date timestamp default now(),
   created_by varchar(100),
-  updated_date timestamp,
+  updated_date timestamp default now(),
   updated_by varchar(100),
   FOREIGN KEY  (direction_id) REFERENCES direction(id)
 );

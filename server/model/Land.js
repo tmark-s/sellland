@@ -5,8 +5,8 @@ class Land {
     try {
       const rows = await db.query(
         `INSERT INTO land (border, rai, ngan, wa, price_per_wa, road, province_id, district_id, sub_district_id,
-        land_slide, land_certificate, map_of_land, created_by, zone_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8,
-        $9, $10, $11, $12, $13, $14)`,
+        land_slide, land_certificate, map_of_land, created_by, zone_id, updated_by, location) VALUES ($1, $2, $3, $4, $5, $6, $7, $8,
+        $9, $10, $11, $12, $13, $14, $15, $16)`,
         [
           land.border,
           land.rai,
@@ -21,7 +21,9 @@ class Land {
           land.landCertificate,
           land.mapOfLand,
           land.createdBy,
-          land.zoneId
+          land.zoneId,
+          land.updatedBy,
+          land.location
         ]
       )
 
