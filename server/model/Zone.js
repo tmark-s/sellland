@@ -4,7 +4,7 @@ class Zone {
   static async findZone (location) {
     try {
       const zone = await db.query(
-        `SELECT * FROM zone WHERE ST_Contains(border, ST_GeoFromText($1))`,
+        `SELECT * FROM zone WHERE ST_Contains(zone.border, ST_GeoFromText($1))`,
         [
           location
         ]

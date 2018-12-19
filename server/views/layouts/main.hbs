@@ -13,10 +13,10 @@
     <link rel="stylesheet" type="text/css" href="/css/backoffice.css">
 
 
-    <title>Homepage</title>
+    <title>Backoffice - Sellland</title>
 </head>
 
-<body>
+<body style="margin-bottom:10%">
 
     <div class="row">
         <div class="column">
@@ -25,19 +25,13 @@
                     <div class="left aligned column">
                         <h1 class="ui header">
                             <img class="ui image" src="../images/logo black.png">
-                            <div class="content">GDPR</div>
+                            <div class="content">SELLLAND</div>
                         </h1>
                     </div>
                     <div class="right aligned column">
                         <div id="CallToAction">
                             {{#if isLogin}}
-                            {{#ifCond role '===' 'admin'}}
-                            <button class="ui primary icon button" id="btnAddAdmin" onclick="goToAdminPage()">
-                                <i class="user icon"></i>
-                                ADMIN MANAGEMENT
-                            </button>
-                            {{/ifCond}}
-                            <button class="ui icon button" id="btnSignOut" onclick="logout()">
+                            <button class="ui icon button" id="btnSignOut" onclick="">
                                 <i class="external alternate icon"></i>
                                 SIGN OUT
                             </button>
@@ -53,26 +47,14 @@
     <div class="row">
         <div id="menu" class="ui basic segment">
             <div id="navigation" class="ui grid">
-                {{#ifCond role '===' 'admin'}} <div class="ui three item secondary pointing menu">
-                    <a id="offeredLandBtn" class="item" onclick="changePage('offeredLand')">
-                        <h3>Offered Land</h3>
+                <div class="ui two item secondary pointing menu">
+                    <a id="landButton" class="item" onclick="changePage('land')">
+                        <h3>LAND</h3>
+                    </a>
+                    <a id="mapButton" class="item" onclick="changePage('map')">
+                        <h3>MAP</h3>
                     </a>
                 </div>
-                {{/ifCond}}
-                {{#ifCond role '===' 'callcentre'}}
-                <div class="ui one item secondary pointing menu">
-                    <a id="offeredLandBtn" class="item" onclick="changePage('offeredLand')">
-                        <h3>Offered Land</h3>
-                    </a>
-                </div>
-                {{/ifCond}}
-                {{#ifCond role '===' 'marketing'}}
-                <div class="ui one item secondary pointing menu">
-                    <a id="offeredLandBtn" class="item" onclick="changePage('offeredLand')">
-                        <h3>Offered Land</h3>
-                    </a>
-                </div>
-                {{/ifCond}}
             </div>
         </div>
     </div>
@@ -88,7 +70,11 @@
     function changePage(page) {
         let urlPage = "";
         switch (page) {
-            case "land": urlPage = "/backoffice/land"; break;
+            case "land": 
+                urlPage = "/backoffice/land"; 
+                break;
+            case "map":
+                urlPage = "/backoffice/map"
         }
         $.ajax({
             type: 'GET',

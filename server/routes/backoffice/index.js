@@ -10,15 +10,15 @@ router.get('/', async function (req, res, next) {
     })
 })
 
-router.get('/land-report', async function (req, res, next) {
+router.get('/land', async function (req, res, next) {
     const zones = await ZoneController.list();
-    res.render('reportPage', {
+    res.render('landPage', {
         isLogin: true,
         zoneList: zones
     })
 })
 
-router.get('/land-map', async function (req, res, next) {
+router.get('/map', async function (req, res, next) {
     const zones = await ZoneController.list();
     res.render('mapPage', {
         isLogin: true,
