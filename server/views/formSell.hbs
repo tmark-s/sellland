@@ -41,11 +41,12 @@
                     var lng = event.overlay.getPath().getAt(i).lng();
                     //polygonArray.push(new google.maps.LatLng(lat, lng));
                     //polygonArray.push({ lat: lat, lng: lng });
-                    polygonArray.push('(' + lat + "," + lng + ')');
+                    polygonArray.push('' + lat + " " + lng + '');
                     testBound.extend(new google.maps.LatLng(lat, lng));
                 }
-                const str = polygonArray.toString();
-                console.log(testBound.getCenter().toUrlValue(6))
+                polygonArray.push(polygonArray[0]);
+                const str = 'POLYGON((' + polygonArray.toString() + '))';
+                console.log('POINT(' + testBound.getCenter().lat() + ' ' + testBound.getCenter().lng() + ')')
                 console.log(polygonArray)
                 console.log(str)
             }
