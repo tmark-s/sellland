@@ -9,7 +9,9 @@
         var testBound = new google.maps.LatLngBounds();
         var map = new google.maps.Map(document.getElementById('drawingMap'), {
             center: { lat: 13.749, lng: 100.546 },
-            zoom: 11
+            zoom: 11,
+            streetViewControl: false,
+            fullscreenControl: false
         });
 
         var drawingManager = new google.maps.drawing.DrawingManager({
