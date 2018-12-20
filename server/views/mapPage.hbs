@@ -7,12 +7,12 @@
         <div class="inline field">
             <label>Zone</label>
             <div class="field"></div>
-            <div class="ui fluid search selection dropdown" id="ddModalEvent">
-                <input type="hidden" id="modalEvent" onchange="filterZone()">
+            <div class="ui fluid search selection dropdown" id="ddZone">
+                <input type="hidden" id="inputZone">
                 <i class="dropdown icon"></i>
                 <div class="default text">All Zone</div>
                 <div class="menu">
-                    <div class="item">All Zone</div>
+                    <div class="item" data-value="">All Zone</div>
                     {{#each zoneList}}
                     <div class="item" data-value="{{this.id}}"><b>Zone {{this.id}}</b> &nbsp;&nbsp; {{this.name_th}}</div>
                     {{/each}}
@@ -33,43 +33,61 @@
     <div id="map"></div>
 </div>
 <script>
-    var map;
+    $('.ui.accordion')
+        .accordion()
+        ;
+    $('.ui.dropdown').dropdown();
+</script>
+
+<script>
+    $('#landButton').attr('class', 'item')
+    $('#mapButton').attr('class', 'active item')
+    $('#btnViewMap').attr('class', 'ui right floated button active')
+    $('#ddZone').dropdown('set selected', {{{ zoneId }}})
+    $('#inputZone').attr('onchange', 'filterZone()')
+    function viewReport() {
+        window.location.href = '/backoffice/land'
+    }
+    function filterZone() {
+        var zoneId = $('#inputZone').val();
+        window.location.href = `/backoffice/map/${zoneId}`
+    }
+</script>
+<script>
+
     function initMap() {
         map = new google.maps.Map(document.getElementById('map'), {
             center: { lat: 13.749, lng: 100.546 },
             zoom: 11
         });
-        var test = [{
-            id: 1,
-            actor_list: '{"lat":13.7982172471626,"lng":100.425150390625}, {"lat":13.7101791033296,"lng":100.423777099609}, {"lat":13.7341927885811,"lng":100.496561523438}, {"lat":13.799550903524,"lng":100.493128295898}, {"lat":13.7982172471626,"lng":100.425150390625}'
-        },
-        {
-            id: 2,
-            actor_list: '{"lat":13.8855556024333,"lng":100.532267089844}, {"lat":13.8135538348518,"lng":100.542566772461}, {"lat":13.8115534675866,"lng":100.623590942383}, {"lat":13.8888884768424,"lng":100.647623535156}, {"lat":13.8855556024333,"lng":100.532267089844}'
-        },
-        {
-            id: 3,
-            actor_list: '{"lat":13.7628725777181,"lng":100.586512084961}, {"lat":13.6794913769514,"lng":100.539133544922}, {"lat":13.6274465272147,"lng":100.605051513672}, {"lat":13.7155156901838,"lng":100.665476318359}, {"lat":13.7628725777181,"lng":100.586512084961}'
-        }]
+        $.ajax({
+            type: 'GET',
+            url: '/api/get-polygon/{{ zoneId }}',
+            contentType: 'application/json',
+            success: function (data) {
+                data.forEach(value => {
+                    var pathArray = []
+                    var valueArray = (value.actor_list).split(', ');
+                    valueArray.forEach(path => {
+                        pathArray.push(JSON.parse(path))
+                    })
 
-        test.forEach(value => {
-            var pathArray = []
-            var valueArray = (value.actor_list).split(', ');
-            valueArray.forEach(path => {
-                pathArray.push(JSON.parse(path))
-            })
-
-            var googlePolygon = new google.maps.Polygon({
-                paths: pathArray,
-                strokeColor: '#FF0000',
-                strokeOpacity: 0.8,
-                strokeWeight: 2,
-                fillColor: '#FF0000',
-                fillOpacity: 0.35
-            });
-            googlePolygon.setMap(map)
-        })
+                    var googlePolygon = new google.maps.Polygon({
+                        paths: pathArray,
+                        strokeColor: '#FF0000',
+                        strokeOpacity: 0.8,
+                        strokeWeight: 2,
+                        fillColor: '#FF0000',
+                        fillOpacity: 0.35
+                    });
+                    googlePolygon.setMap(map)
+                });
+            }, error: function (data) {
+            }
+        });
     }
+
+
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDUn6pj0HG8KbM6zeFBsYgHEjHT70ti8gc&callback=initMap&libraries=geometry"
     async defer></script>
@@ -79,13 +97,3 @@
         height: 60vh;
     }
 </style>
-
-<script>
-    $('#landButton').attr('class', 'item')
-    $('#mapButton').attr('class', 'active item')
-
-    $('#btnViewMap').attr('class', 'ui right floated button active')
-    function viewReport() {
-        window.location.href = '/backoffice/land-report'
-    }
-</script>
