@@ -11,17 +11,17 @@ router.get('/', async function (req, res, next) {
 })
 
 router.get('/land', async function (req, res, next) {
-    const zones = await ZoneController.list();
+    const zoneList = await ZoneController.getList();
     res.render('landPage', {
         isLogin: true,
-        zoneList: zones,
-        poly: zones.st_asgeojson
+        zoneList: zoneList
     })
 })
 
 router.get('/map', async function (req, res, next) {
     const polygons = await ZoneController.getPolygon();
     const zoneList = await ZoneController.getList();
+    console.log(zoneList)
     res.render('mapPage', {
         isLogin: true,
         zoneList: zoneList
@@ -29,12 +29,14 @@ router.get('/map', async function (req, res, next) {
 })
 
 router.get('/map/:zoneId', async function (req, res, next) {
-    const polygons = await ZoneController.getPolygon(req.params.zoneId);
+    const zoneId = req.params.zoneId;
+    const polygons = await ZoneController.getPolygon(zoneId);
     const zoneList = await ZoneController.getList();
     res.render('mapPage', {
         isLogin: true,
         zoneList: zoneList,
-        polygons: polygons
+        polygons: polygons,
+        zoneId: zoneId
     })
 })
 
