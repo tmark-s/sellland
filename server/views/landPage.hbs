@@ -7,12 +7,12 @@
         <div class="inline field">
             <label>Zone</label>
             <div class="field"></div>
-            <div class="ui fluid search selection dropdown" id="ddModalEvent">
-                <input type="hidden" id="modalEvent" onchange="filterZone()">
+            <div class="ui fluid search selection dropdown" id="ddZone">
+                <input type="hidden" id="inputZone">
                 <i class="dropdown icon"></i>
                 <div class="default text">All Zone</div>
                 <div class="menu">
-                    <div class="item">All Zone</div>
+                    <div class="item" data-value="">All Zone</div>
                     {{#each zoneList}}
                     <div class="item" data-value="{{this.id}}"><b>Zone {{this.id}}</b> &nbsp;&nbsp; {{this.name_th}}</div>
                     {{/each}}
@@ -30,46 +30,37 @@
     <div class="ui right floated button primary" style="margin-bottom: 1%" id="btnExportCSV" onclick="exportCSV()">
         EXPORT CSV
     </div>
-    <table class="ui five column table">
+    <table class="ui celled column table">
         <thead>
             <tr>
-                <th>Seller</th>
-                <th>Zone</th>
-                <th>Created Date</th>
-                <th>Status</th>
-                <th>Actions</th>
+                <th class="one wide center aligned">ID</th>
+                <th class="two wide center aligned">ชื่อผู้ขาย</th>
+                <th class="four wide center aligned">โซน</th>
+                <th class="two wide center aligned">พื้นที่</th>
+                <th class="two wide center aligned">วันที่เสนอขาย</th>
+                <th class="one wide center aligned">สถานะที่ดิน</th>
+                <th class="one wide center aligned">ราคา/ตร.ว.</th>
+                <th class="two wide center aligned">ราคารวม</th>
             </tr>
         </thead>
         <tbody>
+            {{#each reportOfferedLand}}
             <tr>
-                <td>John</td>
-                <td>Approved</td>
-                <td>22</td>
-                <td>Male</td>
-                <td>None</td>
+                <td class="center aligned">{{this.land_id}}</td>
+                <td>{{this.seller_name}}</td>
+                <td>{{this.zone_name_th}}</td>
+                <td>{{this.rai}} {{#if this.rai}}ไร่{{/if}} {{this.ngan}} {{#if this.ngan}}งาน{{/if}} {{this.wa}} {{#if
+                    this.wa}}วา{{/if}}</td>
+                <td>{{this.created_date}}</td>
+                <td class="center aligned">On Sale</td>
+                <td class="right aligned">{{this.price_per_wa}}</td>
+                <td class="right aligned">{{this.total_price}}</td>
             </tr>
-            <tr>
-                <td>Jamie</td>
-                <td>Approved</td>
-                <td>32</td>
-                <td>Male</td>
-                <td>Requires call</td>
-            </tr>
-            <tr>
-                <td>Jill</td>
-                <td>Denied</td>
-                <td>22</td>
-                <td>Female</td>
-                <td>None</td>
-            </tr>
+            {{/each}}
         </tbody>
         <tfoot>
             <tr>
-                <th>3 People</th>
-                <th>2 Approved</th>
-                <th></th>
-                <th></th>
-                <th></th>
+                <th colspan="8">2 People 2 On Sale</th>
             </tr>
         </tfoot>
     </table>
@@ -77,20 +68,22 @@
 </div>
 
 <script>
-    $('.ui.accordion')
-        .accordion()
-        ;
+    $('.ui.accordion').accordion();
     $('.ui.dropdown').dropdown();
 </script>
 
 <script>
     $('#landButton').attr('class', 'active item')
     $('#mapButton').attr('class', 'item')
+    $('#ddZone').dropdown('set selected', {{{ zoneId }}})
+    $('#inputZone').attr('onchange', 'filterZone()')
 
     $('#btnViewReport').attr('class', 'ui right floated active button')
-    function filterZone() {
-    }
     function viewMap() {
-        window.location.href = '/backoffice/map'
+        window.location.href = `/backoffice/map/{{{ zoneId }}}`
+    }
+    function filterZone() {
+        var zoneId = $('#inputZone').val();
+        window.location.href = `/backoffice/land/${zoneId}`
     }
 </script>
