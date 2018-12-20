@@ -7,12 +7,12 @@
         <div class="inline field">
             <label>Zone</label>
             <div class="field"></div>
-            <div class="ui fluid search selection dropdown" id="ddModalEvent">
-                <input type="hidden" id="modalEvent" onchange="filterZone()">
+            <div class="ui fluid search selection dropdown" id="ddZone">
+                <input type="hidden" id="inputZone">
                 <i class="dropdown icon"></i>
                 <div class="default text">All Zone</div>
                 <div class="menu">
-                    <div class="item">All Zone</div>
+                    <div class="item" data-value="">All Zone</div>
                     {{#each zoneList}}
                     <div class="item" data-value="{{this.id}}"><b>Zone {{this.id}}</b> &nbsp;&nbsp; {{this.name_th}}</div>
                     {{/each}}
@@ -33,56 +33,61 @@
     <div id="map"></div>
 </div>
 <script>
-    var map;
+    $('.ui.accordion')
+        .accordion()
+        ;
+    $('.ui.dropdown').dropdown();
+</script>
+
+<script>
+    $('#landButton').attr('class', 'item')
+    $('#mapButton').attr('class', 'active item')
+    $('#btnViewMap').attr('class', 'ui right floated button active')
+    $('#ddZone').dropdown('set selected', {{{ zoneId }}})
+    $('#inputZone').attr('onchange', 'filterZone()')
+    function viewReport() {
+        window.location.href = '/backoffice/land'
+    }
+    function filterZone() {
+        var zoneId = $('#inputZone').val();
+        window.location.href = `/backoffice/map/${zoneId}`
+    }
+</script>
+<script>
+
     function initMap() {
         map = new google.maps.Map(document.getElementById('map'), {
             center: { lat: 13.749, lng: 100.546 },
             zoom: 11
         });
+        $.ajax({
+            type: 'GET',
+            url: '/api/get-polygon/{{ zoneId }}',
+            contentType: 'application/json',
+            success: function (data) {
+                data.forEach(value => {
+                    var pathArray = []
+                    var valueArray = (value.actor_list).split(', ');
+                    valueArray.forEach(path => {
+                        pathArray.push(JSON.parse(path))
+                    })
 
-        var myPolygon = new google.maps.Polygon({
-            paths: [
-                { lat: 13.753668747072231, lng: 100.40729760742192 },
-                { lat: 13.71431496668097, lng: 100.40798425292974 },
-                { lat: 13.718317347687956, lng: 100.44368981933599 },
-                { lat: 13.72498783102591, lng: 100.46154260253911 },
-                { lat: 13.73032408114101, lng: 100.47321557617192 },
-                { lat: 13.755002657705623, lng: 100.46703576660161 },
-                { lat: 13.751667866870024, lng: 100.44643640136724 }
-            ],
-            strokeColor: '#FF0000',
-            strokeOpacity: 0.8,
-            strokeWeight: 2,
-            fillColor: '#FF0000',
-            fillOpacity: 0.35
-        });
-
-        var markerLocation = [
-            { lat: 13.791015369051935, lng: 100.44300317382817 },
-            { lat: 13.77767797482358, lng: 100.45055627441411 },
-            { lat: 13.784346767148712, lng: 100.4608559570313 },
-            { lat: 13.793682756476075, lng: 100.45192956542974 },
-            { lat: 13.737661226768585, lng: 100.42171716308599 },
-            { lat: 13.726321904936349, lng: 100.42103051757817 },
-            { lat: 13.741096440461018, lng: 100.42916708725829 },
-            { lat: 13.733092387510078, lng: 100.43191366928954 },
-            { lat: 13.739762450619, lng: 100.44152670639892 },
-            { lat: 13.748433248816086, lng: 100.43878012436767 },
-            { lat: 13.745098364415298, lng: 100.42298727768798 }
-        ]
-
-
-        myPolygon.setMap(map)
-        markerLocation.forEach(value => {
-            if (google.maps.geometry.poly.containsLocation(new google.maps.LatLng(value), myPolygon)) {
-                var marker = new google.maps.Marker({
-                    position: { lat: value.lat, lng: value.lng },
-                    map: map
+                    var googlePolygon = new google.maps.Polygon({
+                        paths: pathArray,
+                        strokeColor: '#FF0000',
+                        strokeOpacity: 0.8,
+                        strokeWeight: 2,
+                        fillColor: '#FF0000',
+                        fillOpacity: 0.35
+                    });
+                    googlePolygon.setMap(map)
                 });
+            }, error: function (data) {
             }
-        })
-
+        });
     }
+
+
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDUn6pj0HG8KbM6zeFBsYgHEjHT70ti8gc&callback=initMap&libraries=geometry"
     async defer></script>
@@ -92,13 +97,3 @@
         height: 60vh;
     }
 </style>
-
-<script>
-    $('#landButton').attr('class', 'item')
-    $('#mapButton').attr('class', 'active item')
-
-    $('#btnViewMap').attr('class', 'ui right floated button active')
-    function viewReport() {
-        window.location.href = '/backoffice/land-report'
-    }
-</script>

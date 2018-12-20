@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 
+const ZoneController = require('../controller/ZoneController')
 const SelllandController = require('../controller/SelllandController')
 
 router.post('/create-sellland', async function (req, res) {
@@ -30,6 +31,24 @@ router.post('/create-sellland', async function (req, res) {
     } else {
       res.status(400).end()
     }
+  } catch (err) {
+    res.status(400).json(err)
+  }
+})
+
+router.get('/get-polygon', async function (req, res) {
+  try {
+    const polygons = await ZoneController.getPolygon();
+    res.json(polygons)
+  } catch (err) {
+    res.status(400).json(err)
+  }
+})
+
+router.get('/get-polygon/:zoneId', async function (req, res) {
+  try {
+    const polygons = await ZoneController.getPolygon(req.params.zoneId);
+    res.json(polygons)
   } catch (err) {
     res.status(400).json(err)
   }
