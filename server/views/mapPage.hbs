@@ -46,7 +46,7 @@
     $('#ddZone').dropdown('set selected', {{{ zoneId }}})
     $('#inputZone').attr('onchange', 'filterZone()')
     function viewReport() {
-        window.location.href = '/backoffice/land'
+        window.location.href = `/backoffice/land/{{{ zoneId }}}`
     }
     function filterZone() {
         var zoneId = $('#inputZone').val();
@@ -67,7 +67,7 @@
             success: function (data) {
                 data.forEach(value => {
                     var pathArray = []
-                    var valueArray = (value.actor_list).split(', ');
+                    var valueArray = (value.strltln).split(', ');
                     valueArray.forEach(path => {
                         pathArray.push(JSON.parse(path))
                     })
@@ -85,9 +85,26 @@
             }, error: function (data) {
             }
         });
+
+        $.ajax({
+            type: 'GET',
+            url: '/api/get-offeredland/{{zoneId}}',
+            contentType: 'application/json',
+            success: function (data) {
+                data.forEach(value => {
+                    var marker = new google.maps.Marker({
+                        position: JSON.parse(value.ltln),
+                        map: map
+                    });
+
+
+                })
+            },
+            error: function (data) {
+
+            }
+        })
     }
-
-
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDUn6pj0HG8KbM6zeFBsYgHEjHT70ti8gc&callback=initMap&libraries=geometry"
     async defer></script>
