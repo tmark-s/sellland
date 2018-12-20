@@ -1,26 +1,36 @@
 <div id="drawingMap"></div>
+<button onclick="setDrawingMode()">Drawing</button>
+<button id="btnFinish" onclick="setNormalMode()" disabled>Finish</button>
+<button onclick="removePolygon()">Reset</button>
 <script>
-    // This example requires the Drawing library. Include the libraries=drawing
-    // parameter when you first load the API. For example:
-    // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=drawing">
-    var polygonArray = []
+    var map;
+    var drawingManager;
+    var polygon = null;
+
+    function setDrawingMode() { // set map เป็น drawing mode
+        drawingManager.setDrawingMode('polygon');
+    }
+
+    function setNormalMode() { // set map เป็น normal mode
+        drawingManager.setDrawingMode(null);
+    }
+
+    function removePolygon() { // ลบ polygon ที่วาดออก
+        polygon.setMap(null);
+    }
 
     function initMap() {
-        var testBound = new google.maps.LatLngBounds();
-        var map = new google.maps.Map(document.getElementById('drawingMap'), {
+        map = new google.maps.Map(document.getElementById('drawingMap'), {
             center: { lat: 13.749, lng: 100.546 },
             zoom: 11
         });
+        var testBound = new google.maps.LatLngBounds(); //สำหรับเก็บ latlng object ไว้คำนวน center เมื่อวาด polygon เสร็จ
 
-        var drawingManager = new google.maps.drawing.DrawingManager({
-            drawingMode: google.maps.drawing.OverlayType.MARKER,
-            drawingControl: true,
-            drawingControlOptions: {
-                position: google.maps.ControlPosition.TOP_CENTER,
-                drawingModes: ['marker', 'circle', 'polygon', 'polyline', 'rectangle']
-            },
-            markerOptions: { icon: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png' },
-            circleOptions: {
+        // สำหรับ setting drawing Manager
+        drawingManager = new google.maps.drawing.DrawingManager({
+            drawingMode: 'polygon', //กำหนด drawing mode ไว้เป็น polygon
+            drawingControl: false, //ซ่อนแถบเครื่องมือ
+            circleOptions: { // กำหนด style ความสวยงามของ polygon
                 fillColor: '#ffff00',
                 fillOpacity: 1,
                 strokeWeight: 5,
@@ -29,31 +39,40 @@
                 zIndex: 1
             }
         });
-        drawingManager.setMap(map);
-
+        drawingManager.setMap(map); //คำสั่ง set ค่าใน map
 
         google.maps.event.addListener(drawingManager, 'overlaycomplete', function (event) {
+            var polygonArray = []
+            if (polygon) { //ลบ polygon เก่าที่ไม่ใช้
+                polygon.setMap(null)
+            }
             if (event.type == 'polygon') {
-                var test = event.overlay.getPath()
-                // console.log(event.overlay.getPath().getAt(1).lat(), ",", event.overlay.getPath().getAt(1).lng())
-                for (var i = 0; i < event.overlay.getPath().getLength(); i++) {
-                    var lat = event.overlay.getPath().getAt(i).lat();
-                    var lng = event.overlay.getPath().getAt(i).lng();
-                    //polygonArray.push(new google.maps.LatLng(lat, lng));
-                    //polygonArray.push({ lat: lat, lng: lng });
+                polygon = event.overlay;
+
+                //จัด format polygon สำหรับเก็บลงใน land.border  ถ้ามีให้เปลี่ยน type เป็น geojson  (google map api) มีฟังกชั่นนี้
+                for (var i = 0; i < polygon.getPath().getLength(); i++) {
+                    var lat = polygon.getPath().getAt(i).lat();
+                    var lng = polygon.getPath().getAt(i).lng();
                     polygonArray.push('' + lat + " " + lng + '');
                     testBound.extend(new google.maps.LatLng(lat, lng));
                 }
                 polygonArray.push(polygonArray[0]);
                 const str = 'POLYGON((' + polygonArray.toString() + '))';
+
+                //แสดง center + ตัวอย่างการหาค่า center เอาไว้ตัดสินใจว่าจะให้ ที่ดินนี้อยู่ใน zone ไหน
                 console.log('POINT(' + testBound.getCenter().lat() + ' ' + testBound.getCenter().lng() + ')')
+
+                //แสดง polygon ในรูปแบบ array
                 console.log(polygonArray)
+                //แสดง polygon ในรูปแบบ string
                 console.log(str)
+
+                // drawingManager.setDrawingMode(null); ถ้าใช้อันนี้คือ วาดเสร็จ จะเปลี่ยนเป็น normal mode
+
+                $('#btnFinish').attr('disabled', false)
             }
         });
     }
-
-
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDUn6pj0HG8KbM6zeFBsYgHEjHT70ti8gc&libraries=drawing&callback=initMap"
     async defer></script>
