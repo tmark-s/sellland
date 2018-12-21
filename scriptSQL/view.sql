@@ -1,4 +1,17 @@
-CREATE VIEW allsellland AS SELECT CONCAT(seller.firstname, seller.lastname) AS name, zone.name_th AS zone_name_th,
-zone.name_en AS zone_name_en, sellland.created_date, land.rai, land.ngan, land.wa FROM sellland 
-INNER JOIN seller ON sellland.seller_id = seller.id
-INNER JOIN land ON sellland.land_id = land.id LEFT OUTER JOIN zone ON land.zone_id = zone.id
+CREATE VIEW allsellland
+AS
+    SELECT
+        la.id as land_id,
+        CONCAT(sl.firstname,' ', sl.lastname) AS seller_name,
+        z.name_th AS zone_name_th,
+        z.name_en AS zone_name_en,
+        to_char( sla.created_date, 'DD-Mon-YYYY HH24:MI') AS created_date,
+        la.rai,
+        la.ngan,
+        la.wa ,
+        la.price_per_wa,
+        ((la.rai*400)+(la.ngan*100)+la.wa)*la.price_per_wa as total_price
+    FROM sellland sla
+        INNER JOIN seller sl ON sla.seller_id = sl.id
+        INNER JOIN land la ON sla.land_id = la.id
+        LEFT OUTER JOIN zone z ON la.zone_id = z.id

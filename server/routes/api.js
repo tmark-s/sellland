@@ -54,4 +54,22 @@ router.get('/get-polygon/:zoneId', async function (req, res) {
   }
 })
 
+router.get('/get-offeredland/', async function (req, res) {
+  try {
+    const lands = await ZoneController.getOfferedLandInZone();
+    res.json(lands)
+  } catch (err) {
+    res.status(400).json(err)
+  }
+})
+
+router.get('/get-offeredland/:zoneId', async function (req, res) {
+  try {
+    const lands = await ZoneController.getOfferedLandInZone(req.params.zoneId);
+    res.json(lands)
+  } catch (err) {
+    res.status(400).json(err)
+  }
+})
+
 module.exports = router

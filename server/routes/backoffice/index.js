@@ -12,16 +12,29 @@ router.get('/', async function (req, res, next) {
 
 router.get('/land', async function (req, res, next) {
     const zoneList = await ZoneController.getList();
+    const lands = await ZoneController.getViewOfferedDataInZone();
     res.render('landPage', {
         isLogin: true,
-        zoneList: zoneList
+        zoneList: zoneList,
+        reportOfferedLand: lands
+    })
+})
+
+router.get('/land/:zoneId', async function (req, res, next) {
+    const zoneId = req.params.zoneId;
+    const zoneList = await ZoneController.getList();
+    const lands = await ZoneController.getViewOfferedDataInZone(zoneId);
+    console.log(lands)
+    res.render('landPage', {
+        isLogin: true,
+        zoneId: zoneId,
+        zoneList: zoneList,
+        reportOfferedLand: lands
     })
 })
 
 router.get('/map', async function (req, res, next) {
-    const polygons = await ZoneController.getPolygon();
     const zoneList = await ZoneController.getList();
-    console.log(zoneList)
     res.render('mapPage', {
         isLogin: true,
         zoneList: zoneList
@@ -30,12 +43,10 @@ router.get('/map', async function (req, res, next) {
 
 router.get('/map/:zoneId', async function (req, res, next) {
     const zoneId = req.params.zoneId;
-    const polygons = await ZoneController.getPolygon(zoneId);
     const zoneList = await ZoneController.getList();
     res.render('mapPage', {
         isLogin: true,
         zoneList: zoneList,
-        polygons: polygons,
         zoneId: zoneId
     })
 })
