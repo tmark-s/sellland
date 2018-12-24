@@ -42,6 +42,7 @@
             }
         });
         drawingManager.setMap(map); //คำสั่ง set ค่าใน map
+        drawingManager.setDrawingMode(null);
 
         google.maps.event.addListener(drawingManager, 'overlaycomplete', function (event) {
             var polygonArray = []

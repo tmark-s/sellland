@@ -30,7 +30,7 @@ class ZoneController {
             z.*,string_agg(ltln, ', ') AS strltln
             FROM zone z 
             LEFT JOIN (
-                           SELECT id,concat('{"lat":',ST_X(p.point),',"lng":', ST_Y(p.point),'}')  as ltln
+                           SELECT id,concat('{"lat":',ST_Y(p.point),',"lng":', ST_X(p.point),'}')  as ltln
                            FROM 
                                (SELECT id,(ST_DumpPoints(border)).geom AS point FROM zone Group By id) p
                     ) latlng

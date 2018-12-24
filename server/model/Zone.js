@@ -10,8 +10,8 @@ class Zone {
         ]
       )
 
-      if (zone.rows[0]) {
-        return zone.rows[0]
+      if (zone.rows.length > 0) {
+        return zone.rows
       } else {
         return undefined
       }

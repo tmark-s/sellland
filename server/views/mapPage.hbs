@@ -58,7 +58,9 @@
     function initMap() {
         map = new google.maps.Map(document.getElementById('map'), {
             center: { lat: 13.749, lng: 100.546 },
-            zoom: 11
+            zoom: 11,
+            streetViewControl: false,
+            fullscreenControl: false
         });
         $.ajax({
             type: 'GET',
@@ -80,6 +82,8 @@
                         fillColor: '#FF0000',
                         fillOpacity: 0.35
                     });
+
+                    console.log(pathArray)
                     googlePolygon.setMap(map)
                 });
             }, error: function (data) {
