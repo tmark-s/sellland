@@ -56,14 +56,14 @@
                 for (var i = 0; i < polygon.getPath().getLength(); i++) {
                     var lat = polygon.getPath().getAt(i).lat();
                     var lng = polygon.getPath().getAt(i).lng();
-                    polygonArray.push('' + lat + " " + lng + '');
+                    polygonArray.push('' + lng + " " + lat + '');
                     testBound.extend(new google.maps.LatLng(lat, lng));
                 }
                 polygonArray.push(polygonArray[0]);
                 const str = 'POLYGON((' + polygonArray.toString() + '))';
 
                 //แสดง center + ตัวอย่างการหาค่า center เอาไว้ตัดสินใจว่าจะให้ ที่ดินนี้อยู่ใน zone ไหน
-                console.log('POINT(' + testBound.getCenter().lat() + ' ' + testBound.getCenter().lng() + ')')
+                console.log('POINT(' + testBound.getCenter().lng() + ' ' + testBound.getCenter().lat() + ')')
 
                 //แสดง polygon ในรูปแบบ array
                 console.log(polygonArray)

@@ -24,7 +24,6 @@ router.get('/land/:zoneId', async function (req, res, next) {
     const zoneId = req.params.zoneId;
     const zoneList = await ZoneController.getList();
     const lands = await ZoneController.getViewOfferedDataInZone(zoneId);
-    console.log(lands)
     res.render('landPage', {
         isLogin: true,
         zoneId: zoneId,

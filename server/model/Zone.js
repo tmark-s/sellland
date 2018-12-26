@@ -4,14 +4,14 @@ class Zone {
   static async findZone (location) {
     try {
       const zone = await db.query(
-        `SELECT * FROM zone WHERE ST_Contains(zone.border, ST_GeoFromText($1))`,
+        `SELECT * FROM (SELECT ST_AsText((ST_Dump(zone.border)).geom) as geom, * FROM zone) as zonepolygon WHERE ST_Contains(geom, $1)`,
         [
           location
         ]
       )
 
-      if (zone.rows.length > 0) {
-        return zone.rows
+      if (zone.rows[0]) {
+        return zone.rows[0]
       } else {
         return undefined
       }

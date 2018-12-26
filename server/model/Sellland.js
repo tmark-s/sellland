@@ -9,7 +9,6 @@ class Sellland {
         sellland.lastname
       ]
     )
-    console.log(seller.rows[0])
 
     if (!seller.rows[0]) {
       try {
@@ -97,7 +96,6 @@ class Sellland {
             sellland.location
           ]
         )
-        console.log(newLand)
 
         const newSellland = await db.query(
           `INSERT INTO sellland (seller_id, land_id, created_by, updated_by) VALUES ($1, $2, $3, $4) RETURNING *`,
@@ -113,7 +111,6 @@ class Sellland {
 
         return newSellland.rows[0]
       } catch (err) {
-        console.log(err)
         await db.query('ROLLBACK')
 
         return undefined

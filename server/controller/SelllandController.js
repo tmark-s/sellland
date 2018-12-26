@@ -44,12 +44,9 @@ class SelllandController {
       sellland.location = location
 
       const zone = await Zone.findZone(location)
+      console.log(zone)
       if (zone) {
-        const zoneId = []
-        zone.forEach(x => {
-          zoneId.push(x.id)
-        })
-        sellland.zoneId = zoneId
+        sellland.zoneId = zone.id
       } else {
         sellland.zoneId = undefined
       }

@@ -51,7 +51,7 @@ class ZoneController {
     static async getOfferedLandInZone(zoneId) {
         try {
             let strQuery = `
-           SELECT id,rai,ngan,wa,concat('{"lat":',ST_X(location),',"lng":', ST_Y(location),'}') ltln,price_per_wa  FROM land
+           SELECT id,rai,ngan,wa,concat('{"lat":',ST_Y(location),',"lng":', ST_X(location),'}') ltln,price_per_wa  FROM land
             `;
             strQuery += zoneId ? ` WHERE zone_id = ` + zoneId : ` `;
             const { rows } = await pool.query(strQuery);
